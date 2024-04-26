@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoURI = (`${process.env.MONGODB_KEY}`)
+const mongoURI = "mongodb+srv://taparia:220807@cluster0.fbjet.mongodb.net/shift-planning"
 
 const connectToMongo = ()=>{
     mongoose.connect(mongoURI, ()=>{
