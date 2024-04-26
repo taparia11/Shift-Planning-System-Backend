@@ -72,21 +72,21 @@ router.post('/shift', fetchuser, async (req, res) => {
         const shift = new Shift({
             user, date, startTime, endTime
         })
-        startTime = new Date(startTime);
-        endTime = new Date(endTime);
-        date = new Date(date);
+        // startTime = new Date(startTime);
+        // endTime = new Date(endTime);
+        // date = new Date(date);
 
-        const prevAvailable = await Shift.find({ date: date });
-        if (prevAvailable && (
-            (startTime >= prevAvailable[0].startTime && startTime <= prevAvailable[0].endTime) ||
-            (endTime >= prevAvailable[0].startTime && endTime <= prevAvailable[0].endTime)
-        )) {
-            res.json({ success: false, msg: "Already assigned free slote in this range" });
-        }
-        else{
+        // const prevAvailable = await Shift.find({ date: date });
+        // if (prevAvailable && (
+        //     (startTime >= prevAvailable[0].startTime && startTime <= prevAvailable[0].endTime) ||
+        //     (endTime >= prevAvailable[0].startTime && endTime <= prevAvailable[0].endTime)
+        // )) {
+        //     res.json({ success: false, msg: "Already assigned free slote in this range" });
+        // }
+        // else{
         const saveShift = await shift.save()
         res.json({success:true, saveShift}) 
-        }
+        // }
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
