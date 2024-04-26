@@ -26,28 +26,20 @@ router.post('/availability', fetchuser, async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-
+        
         startTime = date + "T" + startTime + ":00Z"
         endTime = date + "T" + endTime + ":00Z"
         const available = new Availability({
             date, startTime, endTime, user: req.user.id
         })
         // No multiple avail in same range of time
+        
 
-        startTime = new Date(startTime);
-        endTime = new Date(endTime);
 
-        const prevAvailable = await Availability.find({ date: date });
-        if (prevAvailable && (
-            (startTime >= prevAvailable[0].startTime && startTime <= prevAvailable[0].endTime) ||
-            (endTime >= prevAvailable[0].startTime && endTime <= prevAvailable[0].endTime)
-        )) {
-            res.json({ success: false, msg: "Already assigned free slote in this range" });
-        }
-        else{
+        
             const saveAvailablility = await available.save()
             res.json({ success: true, saveAvailablility })
-        }
+        
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
